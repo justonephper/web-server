@@ -1,0 +1,49 @@
+Ubuntu 安装goaccess工具
+  goaccess下载：https://goaccess.io/download
+  
+  安装步骤:
+  wget https://tar.goaccess.io/goaccess-1.3.tar.gz    --下载
+  tar -xzvf goaccess-1.3.tar.gz                       --解压
+  cd goaccess-1.3                           
+  ./configure --enable-utf8 --enable-geoip=legacy     --成功报错，需要依赖库文件
+  
+  Q1：在执行第四步./configure时，遇到问题：
+    configure: error: 
+    *** Missing development files for the GeoIP library
+  解决：
+    安装库文件
+    wget https://github.com/maxmind/geoip-api-c/releases/download/v1.6.11/GeoIP-1.6.11.tar.gz
+    tar -xzvf GeoIP-1.6.11.tar.gz
+    cd GeoIP-1.6.11
+    ./configure
+    make
+    make install
+  安装成功
+  
+   Q2:在执行第四步./configure时，遇到问题：
+
+  configure: error: *** Missing development libraries for ncursesw
+
+  解决方法：
+  
+  要使用--enable-utf8，你需要安装ncursesw，下面是安装命令：
+  sudo apt-get install libncursesw5-dev
+  
+  最后安装goaccess:
+  ./configure --enable-utf8 --enable-geoip=legacy
+  修改goaccess.conf配置文件
+  time-format 
+  date-format %d/%b/%Y
+  log-format %h - %^ [%d:%t %^] requesthost:"%v"; "%r" requesttime:"%T"; %s %b "%R" - %^"%u"
+  这几个文件前;去掉
+  
+使用：
+  goaccess -f access.log > /mnt/website/access.html
+  报错：
+  没有指定使用的配合文件，需要添加标志-p指定一下
+  goaccess -p /path/goaccess.conf -f /path/access.log > /path/access.html
+  
+生成html页面之后，可以使用浏览器直接访问
+
+ps:可以配置不同的参数指定文件的格式
+  
