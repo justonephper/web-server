@@ -1,0 +1,30 @@
+1.nginx提供了自动认证功能的模块（ngx_http_auth_basic_module），使用起来很方便，链接：http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html
+
+涉及到的指令：auth_basic、auth_basic_user_file
+eg1:
+    Syntax: 	auth_basic string | off;
+    Context: 	http, server, location, limit_except
+eg2:
+    Syntax: 	auth_basic_user_file file;
+    Context: 	http, server, location, limit_except
+    
+ 熟悉两个指令的上下文环境，介绍一下使用示例
+ 
+ 由于直接针对某一个路径进行认证，所以使用了精确匹配，示例：
+ location /access.html {
+    auth_basic "auth验证";
+    auth_basic_user_file "./conf.d/auth";
+ }
+ 配置完成；
+ 
+ 开始维护auth文件中的用户名称和密码信息：
+ sudo printf "username:$(openssl passwd -crypt 123456)\n" >> auth
+ 添加用户信息
+ 
+ 配置全部完成！
+ 
+ 调试过程：
+ nginx -t             //检测配置文件配置,syntax is ok
+ nginx -s reload      //重新加载配置文件
+ 
+ 
