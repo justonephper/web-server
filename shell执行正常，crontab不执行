@@ -1,0 +1,6 @@
+编写一个shell执行正常，但是加入计划任务不执行
+
+在#!/bin/bash下添加一行：
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+具体原因是啥，咱也不知道，咱也不敢问呐！
