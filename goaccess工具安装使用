@@ -47,3 +47,7 @@ Ubuntu 安装goaccess工具
 
 ps:可以配置不同的参数指定文件的格式
   
+apt工具安装：
+  apt install libncursesw5-dev libgeoip-dev libmaxminddb-dev libtokyocabinet-dev libssl-dev
+  打开源码进行编译三部曲，就可以成功安装
+    
