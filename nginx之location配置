@@ -1,4 +1,4 @@
-**location**指令使用：
+location指令使用：
 
 1.问题1：要求能够匹配/access/access.html
   location = /access/access.html {}
