@@ -1,0 +1,55 @@
+location指令使用：
+
+1.问题1：要求能够匹配/access/access.html
+  location = /access/access.html {}
+2.问题2：要求只匹配access这个文件夹
+  location ^~ /access/ {} 
+  
+学习笔记：
+  1.允许根据用户请求的URI来匹配定义的各location，匹配到时，此请求将被相应的location块中的配置所处理；
+      =: 精确匹配检查；
+      ^~：URI的前半部分匹配，不检查正则表达式；不包含后面的参数
+      ~: 正则表达式模式匹配，区分字符大小写；
+      ~*：正则表达式模式 匹配，不区分字符大小写；
+      
+  匹配优先级：精确匹配(=)、^~、~和~*、由不带符号的URL进行左侧匹配；
+  
+  2.引用一个完整例子
+  
+  nginx路由规则配置：
+    location = / {
+       echo "规则A";
+    }
+    location = /login {
+       echo "规则B";
+    }
+    location ^~ /static/ {
+       echo "规则C";
+    }
+    location ^~ /static/files {
+        echo "规则X";
+    }
+    location ~ \.(gif|jpg|png|js|css)$ {
+       echo "规则D";
+    }
+    location ~* \.png$ {
+       echo "规则E";
+    }
+    location /img {
+        echo "规则Y";
+    }
+    location / {
+       echo "规则F";
+    }
+    
+    请求uri                               匹配路由规则
+
+    http://localhost/                     规则A
+    http://localhost/login                规则B
+    http://localhost/register             规则F
+    http://localhost/static/a.html        规则C
+    http://localhost/static/files/a.txt   规则X
+    http://localhost/a.png                规则D
+    http://localhost/a.PNG                规则E
+    http://localhost/img/a.gif            规则D
+    http://localhost/img/a.tiff           规则Y
