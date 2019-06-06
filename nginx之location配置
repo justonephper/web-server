@@ -4,6 +4,8 @@ location指令使用：
   location = /access/access.html {}
 2.问题2：要求只匹配access这个文件夹
   location ^~ /access/ {} 
+3.问题3：假如直接请求 /access/，出现403，为这个目录添加默认读取文件
+  location ^~ /access/ { index access.html; }
   
 学习笔记：
   1.允许根据用户请求的URI来匹配定义的各location，匹配到时，此请求将被相应的location块中的配置所处理；
