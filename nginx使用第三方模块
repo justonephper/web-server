@@ -1,0 +1,15 @@
+１.使用第三方模块echo-nginx
+  pos1:下载了一份openresty,里面包含了很多优秀的第三方模块，然后重新编译，添加参数　--add-module=/path/to/echo-nginx
+        make -j2;       ＃编译
+        make install    #安装
+        重启，echo 生效
+        
+  pos2:或者编译使用动态加载的模式，编译是使用指令　--add-dynamic-module=/path/to/echo-nginx
+        make -j2        #编译
+        make install    ＃安装
+        重启，echo　生效
+        注意（２点）： 
+            1> nginx version > 1.9
+            2> load_module 指令的位置,官方文档说明指令的上下文为：main，亲测必须放在event之前，否则会提示：
+               nginx: [emerg] "load_module" directive is specified too late
+               
