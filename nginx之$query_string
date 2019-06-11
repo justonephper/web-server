@@ -1,0 +1,26 @@
+1.需求是：正常访问路由：domain/index.php?app=ss/index
+  优化后：希望是这样的  domain/ss/index
+  
+  意思是：
+        访问中，/ss/index自动补全index.php?app
+        
+  开始试错：
+        企图借助nginx内置变量来达到这一效果
+        访问domain/ss/index
+        $query_string ""
+        $request_uri  /ss/index
+        $uri          相当于document_root
+        
+        借助try_files指令
+        try_files $uri $uri/ /index.php?$query_string;
+        
+        
+        发现实现不了，$query_string的值为空，$request_uri存在前缀的'/',没办法截取，所以最后放弃这种实现方法
+        
+        访问路由规则改为：
+        domain?app=ss/index
+        
+        这时的$query_string为:app=ss/index，不需要进行处理，直接使用就可以
+        
+        over,thnaks！
+        
