@@ -9,11 +9,10 @@
         访问domain/ss/index
         $query_string ""
         $request_uri  /ss/index
-        $uri          相当于document_root
+        $uri          相当于$document_uri        #$document_uri same as $uri
         
         借助try_files指令
-        try_files $uri $uri/ /index.php?$query_string;
-        
+        try_files $uri $uri/ /index.php?$query_string 
         
         发现实现不了，$query_string的值为空，$request_uri存在前缀的'/',没办法截取，所以最后放弃这种实现方法
         
