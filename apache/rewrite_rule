@@ -1,9 +1,9 @@
 1.今天遇到一个apache重定向的问题
 
     目标路由是：
-          domain/orderInfo?id=123
+          domain/orderInfo&id=123
     期望路由是：
-          domain/?app=order/orderinfo?id=123
+          domain/?app=order/orderinfo&id=123
           
     解决方式1：
     RewriteRule ^orderInfo$ /?app=order/orderinfo [R=permanent,QSA]
@@ -20,6 +20,6 @@
     目标路由是：
           domain/orderInfo/123
     期望路由是：
-          domain/?app=order/orderInfo?id=123
+          domain/?app=order/orderInfo&id=123
           
     同样可以达到效果!
