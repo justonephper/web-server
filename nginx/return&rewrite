@@ -1,0 +1,22 @@
+背景描述：客户端访问https://www.example.com/xxx.json,全部转发到https://www.example.com/activeList,之前架构：域名 -> 物理机器，目前架构:域名 -> 负载均衡器 -> 目标组 -> 物理机器
+
+nginx原配置：
+        location ~ .*\.(json)?$ {
+		            add_header Access-Control-Allow-Origin $http_origin;
+                add_header Access-Control-Allow-Methods $http_access_control_request_method;
+                add_header Access-Control-Allow-Headers $http_access_control_request_headers;
+                add_header Access-Control-Allow-Credentials true;
+                add_header Access-Control-Max-Age 1728000;
+
+                if ($request_method = "OPTIONS") {
+                        return 204;
+                 }
+
+#               rewrite ^/(.*) /activeList permanent;
+#		            return 301 https://$server_name/activeList;
+		            rewrite ^ https://$server_name/activeList permanent;
+        }
+
+
+结论：
+    return 301,需要客户端配合，但是请求参数会丢失，rewrite会保留请求参数
